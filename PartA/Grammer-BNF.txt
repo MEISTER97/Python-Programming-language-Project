@@ -1,0 +1,68 @@
+// Define the grammar rules
+
+statements
+    : NEWLINE* expr (NEWLINE+ expr)* NEWLINE*
+    ;
+
+expr
+    : "VAR" IDENTIFIER "=" expr
+    | comp-expr (("AND" | "OR") comp-expr)*
+    ;
+
+comp-expr
+    : "NOT" comp-expr
+    | arith-expr (("==" | "<" | ">" | "<=" | ">=") arith-expr)*
+    ;
+
+arith-expr
+    : term (("+" | "-") term)*
+    ;
+
+term
+    : factor (("*" | "/" | "%") factor)*
+    ;
+
+factor
+    : ("+" | "-") factor
+    | call
+    | atom
+    ;
+
+call
+    : atom "(" (expr ("," expr)*)? ")"
+    ;
+
+atom
+    : INT
+    | IDENTIFIER
+    | STRING
+    | "(" expr ")"
+    | list-expr
+    | if-expr
+    | func-def
+    ;
+
+list-expr
+    : "[" (expr ("," expr)*)? "]"
+    ;
+
+if-expr
+    : KEYWORD:IF expr KEYWORD:THEN
+      (expr (if-expr-b | if-expr-c)?
+      | NEWLINE statements KEYWORD:END (if-expr-b | if-expr-c)?)
+    ;
+
+if-expr-b
+    : KEYWORD:ELIF expr KEYWORD:THEN
+      (expr (if-expr-b | if-expr-c)?
+      | NEWLINE statements KEYWORD:END (if-expr-b | if-expr-c)?)
+    ;
+
+if-expr-c
+    : KEYWORD:ELSE
+      (expr | NEWLINE statements KEYWORD:END)
+    ;
+
+func-def
+    : "FUN" IDENTIFIER? "(" (IDENTIFIER ("," IDENTIFIER)*)? ")" "->" expr
+    ;
