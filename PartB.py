@@ -1,42 +1,37 @@
 from functools import reduce
 
 # Part B-Q1
-fib = lambda n: reduce(lambda x, _: x + [x[-1] + x[-2]], range(n - 2), [0, 1])[:n]
+fibonacci = lambda n, a=0, b=1: [] if n == 0 else [a] if n == 1 else [a] + fibonacci(n - 1, b, a + b)
 
 # Example usage:
-print(fib(10))  # Output: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+print(fibonacci(10))  # Output: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 
 # Part B-Q2
 
-concat_with_space = lambda lst: reduce(lambda x, y: x + ' ' + y, lst)
+concatenate = lambda strings: reduce(lambda x, y: x + ' ' + y, strings)
 
 # Example usage
 lst = ["Hello", "world", "from", "lambda"]
-result = concat_with_space(lst)
+result = concatenate(lst)
 print(result + "\n")  # Output: "Hello world from lambda"
-
 
 # Part B-Q3
 
-
-def cumulative_sum_of_squares(lists):
-    return list(map(
-        lambda sublist: reduce(
-            lambda acc, x: (lambda even_check: even_check(x))(lambda z: z % 2 == 0) and acc + (lambda y: y * y)(
-                x) or acc,
-            sublist, 0),
-        lists))
-
+cumulative_sum_of_squares = lambda lists: list(map(
+    lambda sublist: reduce(
+        lambda acc, x: acc + (lambda sq: sq if (lambda even_check: even_check(x))(lambda z: z % 2 == 0) else 0)(x ** 2),
+        set(sublist), 0
+    ),
+    lists
+))
 
 # Example usage
-lists = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10]]
-result = cumulative_sum_of_squares(lists)
-print(result)  # Output: [20, 100, 100]
+input_lists = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [2, 2, 2], [5]]
+result = cumulative_sum_of_squares(input_lists)
+print(result)  # Output: [20, 100, 244, 4, 0]
 
 
 # Part B-Q4
-
-
 def cumulative_operation(op):
     def apply_operation(sequence):
         result = sequence[0]
@@ -47,15 +42,17 @@ def cumulative_operation(op):
     return apply_operation
 
 
+# Factorial function: computes the product of numbers from 1 to n
 factorial = lambda n: cumulative_operation(lambda x, y: x * y)(range(1, n + 1))
 
-exponentiation = lambda base, exp: cumulative_operation(lambda x, y: x * y)([base] * exp)
+# Exponentiation function: computes base raised to the power of exp
+exponentiation = lambda base, exp: cumulative_operation(lambda x, y: x * base)([base] * (exp - 1) + [base])
 
 # Factorial of 5
 print(factorial(5))  # Output: 120
 
 # Exponentiation of 2^3
-print(exponentiation(2, 3))  # Output: 8
+print(exponentiation(3, 4))  # Output: 81
 
 # Part B-Q5
 
@@ -97,8 +94,6 @@ print(squared_values)
 print('\nLazy evaluation:')
 squared_values = [square(x) for x in generate_values()]
 print(squared_values)
-
-
 
 # Part B-Q8
 
