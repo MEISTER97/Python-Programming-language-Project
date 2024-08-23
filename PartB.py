@@ -71,6 +71,11 @@ print(count_palindromes(input_list))  # Output: [2, 2, 0]
 
 
 # Part B-Q7
+# The term Lazy evaluation is the following program work as:
+# Generates and processes values one by one, delaying computation until it is necessary
+# generate_values() is called, but instead of converting it to a list, it's directly used in the list comprehension.
+# The list comprehension [square(x) for x in generate_values()] iterates over the generator lazily
+# while the Eager evaluation is generating all values first, then processes them.
 
 def generate_values():
     print('Generating values...')
@@ -88,9 +93,12 @@ print('Eager evaluation:')
 values = list(generate_values())
 squared_values = [square(x) for x in values]
 print(squared_values)
+
 print('\nLazy evaluation:')
 squared_values = [square(x) for x in generate_values()]
 print(squared_values)
+
+
 
 # Part B-Q8
 
