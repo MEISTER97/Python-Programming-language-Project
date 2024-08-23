@@ -5,7 +5,6 @@ def main():
     print("Welcome to the RPEL Lambda Tester!")
 
     # Define test cases
-    # Define test cases
     test_cases = [
         "(3+4)*(2-1)",  # Test arithmetic operations: addition, subtraction, and multiplication
         "10 == 10 && 2 == 3",  # Test boolean expression with logical AND
@@ -54,8 +53,7 @@ def tryRPEL():
     except KeyboardInterrupt:
         print("\nProgram interrupted. Exiting...")
 
+
 if __name__ == "__main__":
     main()
     tryRPEL()
-
-
