@@ -1,68 +1,37 @@
-// Define the grammar rules
+// Expression rules
+expr              : assignment_expr
+                  | logical_expr;
 
-statements
-    : NEWLINE* expr (NEWLINE+ expr)* NEWLINE*
-    ;
+assignment_expr   : KEYWORD:VAR IDENTIFIER EQ expr;
 
-expr
-    : "VAR" IDENTIFIER "=" expr
-    | comp-expr (("AND" | "OR") comp-expr)*
-    ;
+logical_expr      : comp_expr (KEYWORD:AND|KEYWORD:OR comp_expr)*;
 
-comp-expr
-    : "NOT" comp-expr
-    | arith-expr (("==" | "<" | ">" | "<=" | ">=") arith-expr)*
-    ;
+comp_expr         : NOT comp_expr
+                  | arith_expr (EE|LT|GT|LTE|GTE arith_expr)*;
 
-arith-expr
-    : term (("+" | "-") term)*
-    ;
+arith_expr        : term ((PLUS|MINUS) term)*;
 
-term
-    : factor (("*" | "/" | "%") factor)*
-    ;
+term              : factor ((MUL|DIV|MODULO) factor)*;
 
-factor
-    : ("+" | "-") factor
-    | call
-    | atom
-    ;
+factor            : (PLUS|MINUS) factor
+                  | power;
 
-call
-    : atom "(" (expr ("," expr)*)? ")"
-    ;
+power             : call (POW factor)*;
 
-atom
-    : INT
-    | IDENTIFIER
-    | STRING
-    | "(" expr ")"
-    | list-expr
-    | if-expr
-    | func-def
-    ;
+call              : atom (LPAREN (expr (COMMA expr)*)? RPAREN)?;
 
-list-expr
-    : "[" (expr ("," expr)*)? "]"
-    ;
+atom              : INT
+                  | FLOAT
+                  | IDENTIFIER
+                  | LPAREN expr RPAREN
+                  | if_expr
+                  | func_def
+                  | lambda_def;
 
-if-expr
-    : KEYWORD:IF expr KEYWORD:THEN
-      (expr (if-expr-b | if-expr-c)?
-      | NEWLINE statements KEYWORD:END (if-expr-b | if-expr-c)?)
-    ;
+if_expr           : KEYWORD:IF expr KEYWORD:THEN expr
+                  (KEYWORD:ELIF expr KEYWORD:THEN expr)*
+                  (KEYWORD:ELSE expr)?;
 
-if-expr-b
-    : KEYWORD:ELIF expr KEYWORD:THEN
-      (expr (if-expr-b | if-expr-c)?
-      | NEWLINE statements KEYWORD:END (if-expr-b | if-expr-c)?)
-    ;
+func_def          : KEYWORD:FUN IDENTIFIER? LPAREN (IDENTIFIER (COMMA IDENTIFIER)*)? RPAREN ARROW expr;
 
-if-expr-c
-    : KEYWORD:ELSE
-      (expr | NEWLINE statements KEYWORD:END)
-    ;
-
-func-def
-    : "FUN" IDENTIFIER? "(" (IDENTIFIER ("," IDENTIFIER)*)? ")" "->" expr
-    ;
+lambda_def        : KEYWORD:LAMBDA IDENTIFIER (COMMA IDENTIFIER)* DOT expr;
