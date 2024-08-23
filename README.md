@@ -37,3 +37,34 @@ The **Evaluator** executes the AST. It handles:
 1. **Input Processing**: The input source code is read and processed by the Lexer, which breaks it into tokens.
 2. **Parsing**: The Parser takes the tokens and constructs an AST that represents the hierarchical structure of the code.
 3. **Evaluation**: The Evaluator traverses the AST and performs the specified computations or operations to produce a result.
+
+
+The interpreter is designed to evaluate expressions and execute commands in a custom language that supports arithmetic operations, boolean logic, function definitions, and lambda calculus. It can operate in two modes:
+
+1. **Interactive Mode**: For real-time expression evaluation.
+2. **Batch Mode**: For executing a series of commands from a file.
+
+### Running in Interactive Mode
+1. Start the Interpreter: Run the script using Python:
+   python MainRPEL.py
+2. Enter Commands:
+   You will be prompted to enter RPEL expressions or commands.
+   Type your expression or command and press Enter.
+3. Exit:
+Type exit or quit to terminate the interactive session.
+
+### Running in Batch Mode
+   **Prepare the Script File**:
+   - Create a text file named `commands.txt` with each line containing an RPEL expression or command.
+   - Run the script with the command file as an argument: python MainRPEL.py commands.txt
+
+## Supported Features
+- Arithmetic Operations: Addition, subtraction, multiplication, division.
+- Boolean Logic: Logical operators && (AND), || (OR), != (not equal).
+- Function Definitions: Define and call functions with support for recursion.
+- Lambda Expressions: Single and multi-argument lambda functions.
+
+## Limitations
+- Error Handling: The interpreter may not handle all syntax errors gracefully.
+- Performance: Complex expressions or large-scale function evaluations may affect performance.
+
