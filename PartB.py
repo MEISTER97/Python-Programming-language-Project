@@ -102,6 +102,9 @@ print(squared_values)
 get_primes_desc = lambda nums: sorted(
     [x for x in nums if x > 1 and all(x % i != 0 for i in range(2, int(x ** 0.5) + 1))],
     reverse=True)
+# all(): Ensures that x is not divisible by any i in the range.
+# If x is not divisible by any number in this range, it means x is a prime number.
+
 
 nums = [29, 15, 3, 11, 7, 19, 4, 23]
 print(get_primes_desc(nums))  # Output: [29, 23, 19, 11, 7, 3]
