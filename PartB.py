@@ -47,6 +47,7 @@ factorial = lambda n: cumulative_operation(lambda x, y: x * y)(range(1, n + 1))
 
 # Exponentiation function: computes base raised to the power of exp
 exponentiation = lambda base, exp: cumulative_operation(lambda x, y: x * base)([base] * (exp - 1) + [base])
+#create a list : base num *(exp-1) how many time it will repeat
 
 # Factorial of 5
 print(factorial(5))  # Output: 120
@@ -62,6 +63,7 @@ print(reduce(lambda acc, x: acc + x, map(lambda y: y ** 2, filter(lambda num: nu
 # Part B-Q6
 
 count_palindromes = lambda lst: list(map(lambda sublist: len(list(filter(lambda s: s == s[::-1], sublist))), lst))
+#(s[::-1] is the reversed string).
 
 input_list = [["level", "world", "madam"], ["hello", "noon", "abcba"], ["xyz"]]
 print(count_palindromes(input_list))  # Output: [2, 2, 0]
