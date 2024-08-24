@@ -51,7 +51,7 @@ exponentiation = lambda base, exp: cumulative_operation(lambda x, y: x * base)([
 # Factorial of 5
 print(factorial(5))  # Output: 120
 
-# Exponentiation of 2^3
+# Exponentiation of 3^4
 print(exponentiation(3, 4))  # Output: 81
 
 # Part B-Q5
