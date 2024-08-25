@@ -6,7 +6,7 @@ def main():
 
     # Define test cases
     test_cases = [
-        "(3+4)*(2-1)",  # Test arithmetic operations: addition, subtraction, and multiplication
+        "(3+4)%(2-1)",  # Test arithmetic operations: addition, subtraction, and multiplication
         "10 == 10 && 2 == 3",  # Test boolean expression with logical AND
         "10 != 10 || 10 != 2",  # Test boolean expression with logical OR
         "FUNC add(a, b) -> a + b",  # Test function definition with two parameters
